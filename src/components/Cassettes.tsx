@@ -170,7 +170,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
 
   const rotateY = useTransform(
     [rotateYBase, flipAnimation],
-    ([base, flip]) => base + flip
+    ([base, flip]: any) => base + flip
   );
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
