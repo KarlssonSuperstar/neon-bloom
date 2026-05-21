@@ -220,7 +220,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
       className={cn(
         "relative flex flex-col items-center justify-center w-full transition-colors duration-300",
         isActive ? "z-50" : "z-10",
-        "h-[340px] md:h-[780px]"
+        "h-[340px] md:h-[660px]"
       )}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
