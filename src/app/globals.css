@@ -6,22 +6,23 @@
   --color-ink-2: #101218;
   --color-ink-3: #171a23;
   --color-ink-4: #222633;
-  
+
   --color-paper: #f4f1ea;
   --color-paper-dim: #cdc8bc;
-  
+
   --color-bloom: #f98fb9;
   --color-bloom-2: #ff86b6;
   --color-bloom-deep: #c41f6a;
-  
+
   --color-sky: #69b4ff;
-  
+  --color-split: #ff6b3d;
+
   --color-crown: #ffd60a;
   --color-crown-deep: #a88a00;
-  
+
   --color-mute: rgba(244, 241, 234, 0.55);
   --color-mute-2: rgba(244, 241, 234, 0.38);
-  
+
   --color-line: rgba(255, 255, 255, 0.08);
   --color-line-2: rgba(255, 255, 255, 0.14);
 
@@ -39,22 +40,26 @@
 
 @layer base {
   body {
-    background: 
+    background:
       radial-gradient(1200px 700px at 80% -10%, rgba(255, 61, 138, 0.15), transparent 60%),
       radial-gradient(900px 600px at -10% 30%, rgba(105, 180, 255, 0.08), transparent 55%),
       var(--color-ink-0);
     background-attachment: fixed;
+
     /* Custom Scrollbar */
     &::-webkit-scrollbar {
       width: 10px;
     }
+
     &::-webkit-scrollbar-track {
       background: var(--color-ink-1);
     }
+
     &::-webkit-scrollbar-thumb {
       background: var(--color-ink-4);
       border-radius: 0;
     }
+
     &::-webkit-scrollbar-thumb:hover {
       background: var(--color-bloom);
     }
@@ -64,8 +69,8 @@
 @layer utilities {
   .grid-bg {
     background-image:
-      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
     background-size: 64px 64px;
     mask-image: linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
   }
@@ -77,26 +82,26 @@
     pointer-events: none;
     mix-blend-mode: overlay;
     opacity: 0.35;
-    background: repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 3px);
+    background: repeating-linear-gradient(0deg, rgba(255, 255, 255, .04) 0 1px, transparent 1px 3px);
   }
 
   .text-shadow-hero {
-    text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+    text-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
   }
 
   .text-shadow-bloom {
-    text-shadow: 0 0 40px rgba(255,61,138,0.45);
+    text-shadow: 0 0 40px rgba(255, 61, 138, 0.45);
   }
-  
+
   .bg-bloom-gradient {
     background-image: linear-gradient(180deg, #ffd3e3 0%, #ff6aa3 55%, #ffb0cf 100%);
   }
 
   .glitch-bloom {
     position: relative;
-    display: inline-block;
+    display: block;
   }
-  
+
   .glitch-bloom::before,
   .glitch-bloom::after {
     content: attr(data-text);
@@ -112,24 +117,24 @@
     pointer-events: none;
     z-index: 10;
   }
-  
+
   .glitch-bloom::before {
     left: 4px;
     text-shadow: -2px 0 var(--color-sky);
     animation: glitch-anim-1 4.5s infinite linear alternate-reverse;
   }
-  
+
   .glitch-bloom::after {
     left: -4px;
     text-shadow: 2px 0 var(--color-crown);
     animation: glitch-anim-2 5.2s infinite linear alternate-reverse;
   }
-  
+
   .glitch-text {
     position: relative;
-    display: inline-block;
+    display: block;
   }
-  
+
   .glitch-text::before,
   .glitch-text::after {
     content: attr(data-text);
@@ -142,39 +147,107 @@
     pointer-events: none;
     z-index: 10;
   }
-  
+
   .glitch-text::before {
     left: 3px;
     text-shadow: -2px 0 var(--color-bloom);
     animation: glitch-anim-2 3.8s infinite linear alternate-reverse;
   }
-  
+
   .glitch-text::after {
     left: -3px;
     text-shadow: 2px 0 var(--color-sky);
     animation: glitch-anim-1 4.7s infinite linear alternate-reverse;
   }
-  
+
   @keyframes glitch-anim-1 {
-    0%, 80% { clip-path: inset(100%); transform: translate(0); }
-    81% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 1px); }
-    83% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
-    85% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 2px); }
-    87% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
-    89% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 1px); }
-    91% { clip-path: inset(30% 0 50% 0); transform: translate(2px, 2px); }
-    93%, 100% { clip-path: inset(100%); transform: translate(0); }
+
+    0%,
+    80% {
+      clip-path: inset(100%);
+      transform: translate(0);
+    }
+
+    81% {
+      clip-path: inset(20% 0 80% 0);
+      transform: translate(-2px, 1px);
+    }
+
+    83% {
+      clip-path: inset(60% 0 10% 0);
+      transform: translate(2px, -1px);
+    }
+
+    85% {
+      clip-path: inset(40% 0 50% 0);
+      transform: translate(-2px, 2px);
+    }
+
+    87% {
+      clip-path: inset(80% 0 5% 0);
+      transform: translate(2px, -2px);
+    }
+
+    89% {
+      clip-path: inset(10% 0 70% 0);
+      transform: translate(-2px, 1px);
+    }
+
+    91% {
+      clip-path: inset(30% 0 50% 0);
+      transform: translate(2px, 2px);
+    }
+
+    93%,
+    100% {
+      clip-path: inset(100%);
+      transform: translate(0);
+    }
   }
 
   @keyframes glitch-anim-2 {
-    0%, 80% { clip-path: inset(100%); transform: translate(0); }
-    82% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -1px); }
-    84% { clip-path: inset(30% 0 20% 0); transform: translate(-2px, 1px); }
-    86% { clip-path: inset(70% 0 10% 0); transform: translate(2px, 2px); }
-    88% { clip-path: inset(20% 0 50% 0); transform: translate(-2px, -2px); }
-    90% { clip-path: inset(50% 0 30% 0); transform: translate(2px, 1px); }
-    92% { clip-path: inset(5% 0 80% 0); transform: translate(-2px, 2px); }
-    94%, 100% { clip-path: inset(100%); transform: translate(0); }
+
+    0%,
+    80% {
+      clip-path: inset(100%);
+      transform: translate(0);
+    }
+
+    82% {
+      clip-path: inset(10% 0 60% 0);
+      transform: translate(2px, -1px);
+    }
+
+    84% {
+      clip-path: inset(30% 0 20% 0);
+      transform: translate(-2px, 1px);
+    }
+
+    86% {
+      clip-path: inset(70% 0 10% 0);
+      transform: translate(2px, 2px);
+    }
+
+    88% {
+      clip-path: inset(20% 0 50% 0);
+      transform: translate(-2px, -2px);
+    }
+
+    90% {
+      clip-path: inset(50% 0 30% 0);
+      transform: translate(2px, 1px);
+    }
+
+    92% {
+      clip-path: inset(5% 0 80% 0);
+      transform: translate(-2px, 2px);
+    }
+
+    94%,
+    100% {
+      clip-path: inset(100%);
+      transform: translate(0);
+    }
   }
 
   /* ================================================================
@@ -227,7 +300,9 @@
   }
 
   @keyframes map-spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   /* ---- Viewport (16:9 container) ---- */
@@ -258,11 +333,9 @@
     z-index: 1;
     mix-blend-mode: overlay;
     opacity: 0.15;
-    background: repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.06) 0 1px,
-      transparent 1px 3px
-    );
+    background: repeating-linear-gradient(0deg,
+        rgba(255, 255, 255, 0.06) 0 1px,
+        transparent 1px 3px);
   }
 
   /* Grid overlay */
@@ -272,16 +345,12 @@
     pointer-events: none;
     z-index: 1;
     opacity: 0.06;
-    background-image: linear-gradient(
-        to right,
+    background-image: linear-gradient(to right,
         rgba(255, 255, 255, 0.3) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
+        transparent 1px),
+      linear-gradient(to bottom,
         rgba(255, 255, 255, 0.3) 1px,
-        transparent 1px
-      );
+        transparent 1px);
     background-size: 5% 5%;
   }
 
@@ -410,8 +479,15 @@
   }
 
   @keyframes marker-pulse {
-    0% { transform: scale(0.8); opacity: 0.8; }
-    100% { transform: scale(1.6); opacity: 0; }
+    0% {
+      transform: scale(0.8);
+      opacity: 0.8;
+    }
+
+    100% {
+      transform: scale(1.6);
+      opacity: 0;
+    }
   }
 
   /* ---- Tooltip (hover) ---- */
@@ -558,11 +634,9 @@
     flex-direction: row;
     align-items: flex-start;
     gap: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(6, 8, 14, 0.94) 0%,
-      rgba(10, 12, 20, 0.90) 100%
-    );
+    background: linear-gradient(180deg,
+        rgba(6, 8, 14, 0.94) 0%,
+        rgba(10, 12, 20, 0.90) 100%);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-bottom: none;
@@ -713,7 +787,7 @@
   .map-hud__scale-bar {
     display: flex;
     height: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.95);
   }
 
   .map-hud__scale-seg {
@@ -721,16 +795,32 @@
   }
 
   .map-hud__scale-seg--filled {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.95);
   }
 
   .map-hud__scale-labels {
     display: flex;
     justify-content: space-between;
     font-size: clamp(6px, 0.4vw, 8px);
-    color: rgba(244, 241, 234, 0.3);
+    color: #ffffff;
     margin-top: 2px;
     letter-spacing: 0.08em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  }
+
+  /* ---- Map Viewport Scale (top-left HUD overlay) ---- */
+  .map-viewport-scale {
+    position: absolute;
+    top: clamp(8px, 1.2vw, 16px);
+    left: clamp(8px, 1.2vw, 16px);
+    z-index: 25;
+    display: flex;
+    flex-direction: column;
+    width: clamp(95px, 8.5vw, 140px);
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    pointer-events: none;
   }
 
   /* ---- Filter Bar (top-right) ---- */
@@ -1048,36 +1138,93 @@
     }
 
     .map-filter-bar {
-      top: 6px;
-      right: 6px;
+      top: auto;
+      bottom: 64px;
+      right: auto;
+      left: 8px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      justify-content: flex-start;
     }
 
     .map-filter-btn {
-      font-size: 8px;
-      padding: 4px 7px;
+      font-size: 9px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      backdrop-filter: blur(10px);
+      background: rgba(6, 8, 14, 0.85);
     }
 
     /* Enlarge all text on mobile (Medium scale) */
-    .map-label--lg .map-label__text { font-size: 13px; }
-    .map-label--md .map-label__text { font-size: 10px; }
-    .map-label--sm .map-label__text { font-size: 8px; }
-    .map-label__sub { font-size: 7px; }
+    .map-label--lg .map-label__text {
+      font-size: 13px;
+    }
 
-    .map-info-card__name { font-size: 16px; }
-    .map-info-card__type { font-size: 10px; }
-    .map-info-card__faction { font-size: 11px; }
-    .map-info-card__desc { font-size: 11px; line-height: 1.5; }
-    .map-info-card__coords { font-size: 9px; }
+    .map-label--md .map-label__text {
+      font-size: 10px;
+    }
 
-    .map-branding__title { font-size: 12px; }
-    .map-branding__sub { font-size: 7px; }
+    .map-label--sm .map-label__text {
+      font-size: 8px;
+    }
 
-    .map-hud__title { font-size: 14px; }
-    .map-hud__subtitle { font-size: 8px; }
-    .map-hud__version { font-size: 7px; }
-    .map-hud__group-title { font-size: 8px; }
-    .map-hud__legend-item { font-size: 8px; }
-    .map-hud__scale-labels { font-size: 7px; }
+    .map-label__sub {
+      font-size: 7px;
+    }
+
+    .map-info-card__name {
+      font-size: 16px;
+    }
+
+    .map-info-card__type {
+      font-size: 10px;
+    }
+
+    .map-info-card__faction {
+      font-size: 11px;
+    }
+
+    .map-info-card__desc {
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .map-info-card__coords {
+      font-size: 9px;
+    }
+
+    .map-branding__title {
+      font-size: 12px;
+    }
+
+    .map-branding__sub {
+      font-size: 7px;
+    }
+
+    .map-hud__title {
+      font-size: 14px;
+    }
+
+    .map-hud__subtitle {
+      font-size: 8px;
+    }
+
+    .map-hud__version {
+      font-size: 7px;
+    }
+
+    .map-hud__group-title {
+      font-size: 8px;
+    }
+
+    .map-hud__legend-item {
+      font-size: 8px;
+    }
+
+    .map-hud__scale-labels {
+      font-size: 7px;
+    }
 
     .map-marker {
       width: clamp(36px, 6vw, 50px);
@@ -1307,11 +1454,9 @@
   padding: clamp(10px, 1vw, 16px) clamp(12px, 1.5vw, 20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: none;
-  background: linear-gradient(
-    135deg,
-    rgba(10, 12, 18, 0.95) 0%,
-    rgba(14, 16, 24, 0.9) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(10, 12, 18, 0.95) 0%,
+      rgba(14, 16, 24, 0.9) 100%);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.18em;

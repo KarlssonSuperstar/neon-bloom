@@ -20,6 +20,7 @@ type Character = {
     height: string;
     scale: number; // Visual scale multiplier (1 = normal, 1.2 = 20% bigger, 0.8 = 20% smaller)
     zIndex: number;
+    selectedX?: string; // Optional custom horizontal offset for selected state
   };
 };
 
@@ -47,7 +48,7 @@ const CHARACTERS: Character[] = [
     description: "A seasoned veteran of the underground circuits, striking from the shadows.",
     quote: "They won't know what hit them until it's too late.",
     // Back-left of the group, medium height
-    desktopPosition: { left: "0%", bottom: "0%", height: "90%", scale: 0.7, zIndex: 12 }
+    desktopPosition: { left: "-4%", bottom: "0%", height: "90%", scale: 0.7, zIndex: 12 }
   },
   {
     id: "neon-2",
@@ -59,7 +60,7 @@ const CHARACTERS: Character[] = [
     description: "Tech-savvy hacker with a penchant for explosive diversions.",
     quote: "Watch the fireworks. I coded them myself.",
     // Behind Mira, elevated — her head/arm pokes above the group
-    desktopPosition: { left: "12%", bottom: "6%", height: "100%", scale: 0.7, zIndex: 6 }
+    desktopPosition: { left: "8%", bottom: "6%", height: "100%", scale: 0.7, zIndex: 6 }
   },
   {
     id: "neon-3",
@@ -71,7 +72,7 @@ const CHARACTERS: Character[] = [
     description: "The muscle. Hard-hitting and relentless in hand-to-hand combat.",
     quote: "I'll break the front door down.",
     // Center of the left group, overlapping Juno
-    desktopPosition: { left: "4%", bottom: "0%", height: "68%", scale: 0.7, zIndex: 22 }
+    desktopPosition: { left: "0%", bottom: "0%", height: "68%", scale: 0.7, zIndex: 22 }
   },
   {
     id: "neon-4",
@@ -83,7 +84,7 @@ const CHARACTERS: Character[] = [
     description: "A skilled courier pulled into a larger conflict after carrying a high-value cargo cassette.",
     quote: "Every delivery has a cost. I just stopped pretending it was only money.",
     // Front-right of Bloom group, shorter, closest to camera
-    desktopPosition: { left: "20%", bottom: "0%", height: "55%", scale: 0.7, zIndex: 28 }
+    desktopPosition: { left: "16%", bottom: "0%", height: "55%", scale: 0.7, zIndex: 28 }
   },
   // ── CROWN DIVISION (right cluster, ~50%–78%) ────────────────────────
   {
@@ -108,7 +109,7 @@ const CHARACTERS: Character[] = [
     description: "Tactical overseer with unmatched precision.",
     quote: "I see every move before you even make it.",
     // Right-center, in front of Goliath
-    desktopPosition: { left: "65%", bottom: "0%", height: "72%", scale: 0.7, zIndex: 18 }
+    desktopPosition: { left: "65%", bottom: "0%", height: "72%", scale: 0.7, zIndex: 18, selectedX: "-33%" }
   },
   {
     id: "crown-3",
@@ -194,8 +195,21 @@ export default function CharacterShowcase() {
   const selectedIndex = CHARACTERS.findIndex(c => c.id === selectedId);
 
   return (
-    <section className="relative w-full pb-16 md:pb-24 overflow-x-hidden bg-black/40">
+    <section className="relative w-full pt-16 md:pt-20 lg:pt-24 pb-16 md:pb-24 overflow-x-hidden bg-black/40">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
+
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-y-3 gap-x-8 pb-12 mb-8 border-b border-line">
+          <div>
+            <div className="font-mono text-[11px] tracking-[0.22em] uppercase text-mute">§ 06.1 · OPERATIVES</div>
+            <h2 className="mt-3 font-display font-bold text-[clamp(32px,4.2vw,56px)] leading-[1.02] tracking-[-0.02em] max-w-[900px]">
+              Know your allies.<br className="hidden md:inline" /> Fear your enemies.
+            </h2>
+          </div>
+          <div className="font-mono text-[11px] tracking-[0.18em] uppercase text-mute text-left md:text-right min-w-[200px] mt-2 md:mt-0">
+            8 OPERATIVES LOGGED <span className="md:hidden">·</span> <br className="hidden md:inline" /> SELECT TO INSPECT
+          </div>
+        </div>
 
         {/* ========================================================================
             1. CHARACTER LINEUP CONTAINER
@@ -257,7 +271,7 @@ export default function CharacterShowcase() {
                     left: "50%",
                     bottom: "0%",
                     height: "100%",
-                    x: "-50%",
+                    x: char.desktopPosition.selectedX || "-50%",
                     scale: 1.05,
                     filter: `brightness(1) drop-shadow(0px 20px 40px ${char.factionColor}40)`,
                     opacity: 1,
@@ -310,6 +324,32 @@ export default function CharacterShowcase() {
                     )}
                   >
                     <div className="relative h-full w-auto flex justify-center">
+                      {/* Name tag / Badge above head on hover */}
+                      <AnimatePresence>
+                        {isHovered && !isSelected && isDesktop && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 12, scale: 0.8 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 6, scale: 0.85 }}
+                            transition={{ duration: 0.18, ease: "easeOut" }}
+                            className="absolute -top-[68px] left-1/2 -translate-x-1/2 z-40 pointer-events-none flex flex-col items-center"
+                          >
+                            <div className={clsx(
+                              "px-7 py-3 text-base md:text-lg font-mono font-bold uppercase tracking-[0.3em] rounded-sm border shadow-2xl backdrop-blur-md whitespace-nowrap",
+                              char.faction === "Neon Bloom"
+                                ? "bg-black/95 border-[#ff2f91]/80 text-[#ff2f91] shadow-[#ff2f91]/30"
+                                : "bg-black/95 border-[#facc15]/80 text-[#facc15] shadow-[#facc15]/30"
+                            )}>
+                              {char.name}
+                            </div>
+                            <div className={clsx(
+                              "w-3.5 h-3.5 border-r border-b rotate-45 -mt-[8px] bg-black/95",
+                              char.faction === "Neon Bloom" ? "border-[#ff2f91]/80" : "border-[#facc15]/80"
+                            )} />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
                       {/* LINEUP IMAGE */}
                       <motion.img
                         src={char.lineupImage}

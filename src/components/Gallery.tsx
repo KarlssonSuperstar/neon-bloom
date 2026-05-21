@@ -2,16 +2,17 @@
 
 import { motion } from "framer-motion";
 import { clsx } from "clsx";
+import Image from "next/image";
 
 const ITEMS = [
-  { c: "col-span-2 md:col-span-6 row-span-1 md:row-span-2", k: "CAP-001", t: "City Vista", id: "gal-1" },
-  { c: "col-span-2 md:col-span-3 row-span-1", k: "CAP-002", t: "Bloomfields", id: "gal-2" },
-  { c: "col-span-2 md:col-span-3 row-span-1", k: "CAP-003", t: "Courier · Action", id: "gal-3" },
-  { c: "col-span-2 md:col-span-3 row-span-1", k: "CAP-004", t: "Vehicle Chase", id: "gal-4" },
-  { c: "col-span-2 md:col-span-3 row-span-1", k: "CAP-005", t: "Crown Operative", id: "gal-5" },
-  { c: "col-span-2 md:col-span-4 row-span-1 md:row-span-2", k: "CAP-006", t: "Courier · Close-Up", id: "gal-6" },
-  { c: "col-span-2 md:col-span-4 row-span-1", k: "CAP-007", t: "Bloom Network", id: "gal-7" },
-  { c: "col-span-2 md:col-span-4 row-span-1", k: "CAP-008", t: "Skyline · District 09", id: "gal-8" }
+  { c: "col-span-2 md:col-span-6 row-span-1 md:row-span-2", k: "CAP-001", t: "City Vista", id: "gal-1", src: "/assets/Media/Cliff.png" },
+  { c: "col-span-2 md:col-span-3 row-span-1", k: "CAP-002", t: "Bloomfields", id: "gal-2", src: "/assets/Media/cave.png" },
+  { c: "col-span-2 md:col-span-3 row-span-1", k: "CAP-003", t: "Courier · Action", id: "gal-3", src: "/assets/Media/Action.png" },
+  { c: "col-span-2 md:col-span-3 row-span-1", k: "CAP-004", t: "Vehicle Chase", id: "gal-4", src: "/assets/Media/BikeRide.png" },
+  { c: "col-span-2 md:col-span-3 row-span-1", k: "CAP-005", t: "Crown Operative", id: "gal-5", src: "/assets/Media/Juno.png" },
+  { c: "col-span-2 md:col-span-4 row-span-1 md:row-span-2", k: "CAP-006", t: "Courier · Close-Up", id: "gal-6", src: "/assets/Media/inventory.png" },
+  { c: "col-span-2 md:col-span-4 row-span-1", k: "CAP-007", t: "Bloom Network", id: "gal-7", src: "/assets/Media/Mission.png" },
+  { c: "col-span-2 md:col-span-4 row-span-1", k: "CAP-008", t: "Skyline · District 09", id: "gal-8", src: "/assets/Media/Transport.png" }
 ];
 
 export default function Gallery() {
@@ -29,7 +30,13 @@ export default function Gallery() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-12 auto-rows-[200px] md:auto-rows-[160px] gap-exp-3 py-exp-4">
+      <div className={clsx(
+        "py-exp-4",
+        "flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8", // Mobile carousel
+        "-mx-exp-3 px-exp-3 md:mx-0 md:px-0", // Edge-to-edge on mobile
+        "[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]", // Hide scrollbar
+        "md:grid md:grid-cols-12 md:auto-rows-[160px] md:gap-exp-3 md:pb-exp-4 md:flex-none" // Desktop grid
+      )}>
         {ITEMS.map((it, i) => (
           <motion.div 
             key={it.id}
@@ -39,6 +46,8 @@ export default function Gallery() {
             transition={{ duration: 0.5, delay: i * 0.05 }}
             className={clsx(
               "relative overflow-hidden border border-line bg-[#0d0f15] group",
+              "shrink-0 w-[85vw] aspect-video snap-center", // Mobile item sizing (16:9 ratio)
+              "md:shrink md:w-full md:h-full md:aspect-auto md:min-h-0 md:max-h-none md:snap-align-none", // Desktop item sizing
               it.c
             )}
           >
@@ -46,9 +55,23 @@ export default function Gallery() {
               {it.k}
             </div>
             
-            <div className="absolute inset-0 bg-[#0c0e15] flex items-center justify-center border border-white/10 text-paper/40 font-mono text-xs z-10 group-hover:scale-105 transition-transform duration-700">
-              [ {it.t} ]
-            </div>
+            {!it.src && (
+              <div className="absolute inset-0 bg-[#0c0e15] flex items-center justify-center border border-white/10 text-paper/40 font-mono text-xs z-10 group-hover:scale-105 transition-transform duration-700">
+                [ {it.t} ]
+              </div>
+            )}
+
+            {it.src && (
+              <div className="absolute inset-0 z-10 overflow-hidden">
+                <Image
+                  src={it.src}
+                  alt={it.t}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            )}
             
             <div className="absolute left-0 right-0 bottom-0 p-2.5 px-3.5 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.8))] flex justify-between items-end z-20 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
               <span className="font-display font-bold text-sm tracking-[0.01em]">{it.t}</span>

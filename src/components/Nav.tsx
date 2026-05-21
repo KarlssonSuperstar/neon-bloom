@@ -32,7 +32,7 @@ export default function Nav() {
     >
       <div className="w-full max-w-[1480px] mx-auto flex items-center justify-between px-exp-3 md:px-exp-4 py-exp-3">
         <div className="flex items-center gap-exp-2 font-display font-black text-sm tracking-wider text-paper">
-          <div className="w-2.5 h-2.5 rounded-sm bg-bloom shadow-[0_0_18px_var(--color-bloom)]" />
+          <img src="/assets/Loggo.png" alt="NEON BLOOM Logo" className="h-7 w-auto object-contain" />
           NEON BLOOM
         </div>
 

@@ -88,6 +88,35 @@ export default function InteractiveMap() {
   const [traceCopied, setTraceCopied] = useState(false);
   const [traceCursor, setTraceCursor] = useState<{ x: number; y: number; px: number; py: number } | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const filterBarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const filterBar = filterBarRef.current;
+    if (!section || !filterBar) return;
+
+    const handleScroll = () => {
+      // Only apply transform on mobile (<768px) where horizontal scroll is active
+      if (window.innerWidth <= 768) {
+        // Keeps the filter bar pinned to the left edge of the visible scroll area
+        filterBar.style.transform = `translateX(${section.scrollLeft}px)`;
+      } else {
+        filterBar.style.transform = 'none';
+      }
+    };
+
+    section.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+    
+    // Initial call
+    handleScroll();
+
+    return () => {
+      section.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
 
   const handleTracingClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -151,7 +180,7 @@ export default function InteractiveMap() {
   const isZoneVisible = (f: Faction) => filters[f];
 
   return (
-    <div className="map-section" id="interactive-map">
+    <div className="map-section" id="interactive-map" ref={sectionRef}>
       {/* ---- Loading / Error Overlay ---- */}
       {!mapData && !loadError && (
         <div className="map-loading-overlay">
@@ -276,21 +305,6 @@ export default function InteractiveMap() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="map-hud__vdivider" />
-
-        {/* Scale bar */}
-        <div className="map-hud__scale">
-          <div className="map-hud__scale-bar">
-            <div className="map-hud__scale-seg map-hud__scale-seg--filled" />
-            <div className="map-hud__scale-seg" />
-            <div className="map-hud__scale-seg map-hud__scale-seg--filled" />
-            <div className="map-hud__scale-seg" />
-          </div>
-          <div className="map-hud__scale-labels">
-            <span>0</span><span>5KM</span><span>10KM</span><span>20KM</span><span>30KM</span>
-          </div>
-        </div>
       </div>
 
       {/* ---- Map Viewport (16:9 aspect) ---- */}
@@ -318,6 +332,19 @@ export default function InteractiveMap() {
         {/* Scanline & grid overlay */}
         <div className="map-scanline-overlay" />
         <div className="map-grid-overlay" />
+
+        {/* ---- Scale Bar Overlay (top-left) ---- */}
+        <div className="map-viewport-scale">
+          <div className="map-hud__scale-bar">
+            <div className="map-hud__scale-seg map-hud__scale-seg--filled" />
+            <div className="map-hud__scale-seg" />
+            <div className="map-hud__scale-seg map-hud__scale-seg--filled" />
+            <div className="map-hud__scale-seg" />
+          </div>
+          <div className="map-hud__scale-labels">
+            <span>0</span><span>5KM</span><span>10KM</span><span>20KM</span><span>30KM</span>
+          </div>
+        </div>
 
         {/* ---- SVG Zones + Routes Layer ---- */}
         <svg
@@ -543,8 +570,8 @@ export default function InteractiveMap() {
           )}
         </AnimatePresence>
 
-        {/* ---- Filter Bar (top-right) ---- */}
-        <div className="map-filter-bar">
+        {/* ---- Filter Bar ---- */}
+        <div className="map-filter-bar" ref={filterBarRef}>
           {FILTER_BUTTONS.map((fb) => (
             <button
               key={fb.key}
