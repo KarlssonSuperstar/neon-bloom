@@ -94,7 +94,7 @@ export default function Hero() {
             <span>FILE · PX-01 / SEALED</span>
           </div>
           
-          <h1 className="font-display font-black text-[clamp(56px,7.2vw,124px)] leading-[1.1] tracking-[-0.03em] mt-exp-2 mb-exp-4 text-shadow-hero">
+          <h1 className="font-display font-black text-[clamp(56px,7.2vw,124px)] leading-[1em] tracking-[-0.03em] mt-exp-2 mb-exp-4 text-shadow-hero">
             <span className="block glitch-text" data-text="NEON" style={{ display: "block" }}>NEON</span>
             <span className="block bg-bloom-gradient bg-clip-text text-transparent text-shadow-bloom glitch-bloom" data-text="BLOOM" style={{ display: "block" }}>BLOOM</span>
           </h1>
