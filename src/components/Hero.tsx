@@ -17,7 +17,6 @@ export default function Hero() {
   });
 
   // Parallax effects
-  const bgY = useTransform(smoothProgress, [0, 1], ["0%", "20%"]);
   const textY = useTransform(smoothProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(smoothProgress, [0, 0.8], [1, 0]);
 
@@ -26,9 +25,8 @@ export default function Hero() {
       ref={containerRef}
       className="relative w-full h-[min(100vh,1080px)] min-h-[850px] overflow-hidden bg-[#d51b62] border-b border-line isolate"
     >
-      {/* Background with Parallax */}
-      <motion.div 
-        style={{ y: bgY }}
+      {/* Background without Parallax to prevent video mask lag */}
+      <div 
         className="absolute inset-0 z-0"
       >
         <div 
@@ -52,7 +50,7 @@ export default function Hero() {
             <source src="/assets/HeroVideo.mp4" type="video/mp4" />
           </video>
         </div>
-      </motion.div>
+      </div>
       
       {/* Left shadow gradient */}
       <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(90deg,rgba(8,4,10,0.78)_0%,rgba(8,4,10,0.55)_22%,rgba(8,4,10,0.18)_44%,transparent_60%),linear-gradient(180deg,rgba(8,4,10,0.45)_0%,transparent_18%,transparent_78%,rgba(8,4,10,0.55)_100%)]" />
@@ -75,7 +73,7 @@ export default function Hero() {
       {/* Content Inner */}
       <motion.div 
         style={{ y: textY, opacity }}
-        className="relative z-50 w-full max-w-[1480px] mx-auto px-exp-3 md:px-exp-4 h-full flex flex-col justify-between pt-[80px]"
+        className="relative z-50 w-full max-w-[1480px] mx-auto px-exp-3 md:px-exp-4 h-full flex flex-col justify-between pt-[80px] will-change-transform"
       >
         {/* Top Strip */}
         <div className="flex justify-between items-center flex-wrap gap-exp-3 py-[18px] border-b border-white/10 font-mono text-[10px] uppercase tracking-[0.2em] text-paper-dim">
@@ -118,7 +116,7 @@ export default function Hero() {
         </div>
 
         {/* Bottom Strip */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-exp-3 py-[18px] pb-exp-3 border-t border-white/10 backdrop-blur-md">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-exp-3 py-[18px] pb-exp-3 border-t border-white/10">
           <div className="flex flex-col gap-exp-1">
             <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/55">Genre</span>
             <span className="font-mono font-medium text-[12.5px] tracking-[0.08em] text-paper">Open-World Action</span>

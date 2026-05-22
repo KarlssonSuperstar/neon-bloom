@@ -504,6 +504,22 @@
     pointer-events: none;
   }
 
+  .map-tooltip__image-wrapper {
+    margin-bottom: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .map-tooltip__image {
+    width: 100%;
+    height: auto;
+    max-height: 120px;
+    object-fit: cover;
+    display: block;
+  }
+
   .map-tooltip__name {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -556,23 +572,45 @@
     height: 3px;
   }
 
+  .map-info-card__image-wrapper {
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .map-info-card__image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+  }
+
   .map-info-card__close {
     position: absolute;
-    top: 8px;
+    top: 10px;
     right: 10px;
-    background: none;
-    border: none;
-    color: rgba(244, 241, 234, 0.5);
-    font-size: 18px;
+    background: rgba(6, 8, 14, 0.75);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: rgba(244, 241, 234, 0.85);
+    font-size: 16px;
     cursor: pointer;
     z-index: 5;
     line-height: 1;
-    padding: 4px;
-    transition: color 0.2s;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
   }
 
   .map-info-card__close:hover {
-    color: #f4f1ea;
+    color: #ffffff;
+    background: rgba(6, 8, 14, 0.95);
+    border-color: rgba(255, 255, 255, 0.5);
   }
 
   .map-info-card__type {
@@ -1478,4 +1516,9 @@
     font-size: 10px;
     min-width: 70px;
   }
+}
+
+/* Hide Netlify Collaborative Deploy Preview Drawer */
+iframe[src^="https://app.netlify.com"] {
+  display: none !important;
 }

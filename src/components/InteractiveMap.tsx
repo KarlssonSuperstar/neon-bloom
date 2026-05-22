@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import {
   FACTION_COLORS, ICON_MAP, ROUTE_STYLES,
   type MapMarkerData, type MapLabelData, type MapRouteData,
@@ -50,6 +51,12 @@ const FILTER_BUTTONS: { key: keyof Filters; label: string; color: string }[] = [
    MAIN COMPONENT
    ================================================================ */
 
+const EMPTY_MARKERS: MapMarkerData[] = [];
+const EMPTY_LABELS: MapLabelData[] = [];
+const EMPTY_ROUTES: MapRouteData[] = [];
+const EMPTY_BLOCKED_POINTS: BlockedPointData[] = [];
+const EMPTY_ZONES: MapZoneData[] = [];
+
 export default function InteractiveMap() {
   /* ---- Map data from JSON ---- */
   const [mapData, setMapData] = useState<MapDataPayload | null>(null);
@@ -72,11 +79,11 @@ export default function InteractiveMap() {
   }, []);
 
   /* Destructure with fallback empty arrays while loading */
-  const markers = mapData?.markers ?? [];
-  const labels = mapData?.labels ?? [];
-  const routes = mapData?.routes ?? [];
-  const blockedPoints = mapData?.blockedPoints ?? [];
-  const zones = mapData?.zones ?? [];
+  const markers = mapData?.markers ?? EMPTY_MARKERS;
+  const labels = mapData?.labels ?? EMPTY_LABELS;
+  const routes = mapData?.routes ?? EMPTY_ROUTES;
+  const blockedPoints = mapData?.blockedPoints ?? EMPTY_BLOCKED_POINTS;
+  const zones = mapData?.zones ?? EMPTY_ZONES;
 
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [hoveredMarker, setHoveredMarker] = useState<string | null>(null);
@@ -176,6 +183,7 @@ export default function InteractiveMap() {
   // Labels: ALWAYS visible regardless of filters
   // Icons: only toggled by the "Icons" button
   // Zones: toggled by faction buttons (Bloom / Crown / Neutral / Contested)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isMarkerVisible = (_m: MapMarkerData) => filters.icons;
   const isZoneVisible = (f: Faction) => filters[f];
 
@@ -288,9 +296,11 @@ export default function InteractiveMap() {
             ["Industrial Facility", "industrial"],
           ] as [string, string][]).map(([name, type]) => (
             <div key={name} className="map-hud__legend-item">
-              <img
+              <Image
                 src={ICON_MAP[type as keyof typeof ICON_MAP]}
                 alt=""
+                width={20}
+                height={20}
                 className="map-hud__legend-icon"
                 draggable={false}
               />
@@ -322,11 +332,12 @@ export default function InteractiveMap() {
         onMouseLeave={() => setTraceCursor(null)}
       >
         {/* Base map image */}
-        <img
+        <Image
           src="/assets/Map/Map.png"
           alt="Neon Bloom Regional Map"
           className="map-bg"
           draggable={false}
+          fill
         />
 
         {/* Scanline & grid overlay */}
@@ -470,9 +481,11 @@ export default function InteractiveMap() {
                 aria-label={marker.name}
               >
                 {iconSrc ? (
-                  <img
+                  <Image
                     src={iconSrc}
                     alt=""
+                    width={24}
+                    height={24}
                     className="map-marker__icon"
                     draggable={false}
                   />
@@ -496,12 +509,28 @@ export default function InteractiveMap() {
                 left: `${hoveredData.x}%`,
                 top: `${hoveredData.y}%`,
                 borderColor: FACTION_COLORS[hoveredData.faction],
+                transform: `translate(${
+                  hoveredData.x > 80 ? "-100%" : hoveredData.x < 20 ? "0%" : "-50%"
+                }, ${
+                  hoveredData.y < 40 ? "24px" : "calc(-100% - 16px)"
+                })`,
               }}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 4 }}
+              initial={{ opacity: 0, marginTop: 4 }}
+              animate={{ opacity: 1, marginTop: 0 }}
+              exit={{ opacity: 0, marginTop: 4 }}
               transition={{ duration: 0.15 }}
             >
+              {hoveredData.imageUrl && (
+                <div className="map-tooltip__image-wrapper">
+                  <Image
+                    src={hoveredData.imageUrl}
+                    alt={hoveredData.name}
+                    width={220}
+                    height={110}
+                    className="map-tooltip__image"
+                  />
+                </div>
+              )}
               <div className="map-tooltip__name">{hoveredData.name}</div>
               <div
                 className="map-tooltip__faction"
@@ -548,6 +577,17 @@ export default function InteractiveMap() {
                 className="map-info-card__accent"
                 style={{ background: FACTION_COLORS[activeData.faction] }}
               />
+              {activeData.imageUrl && (
+                <div className="map-info-card__image-wrapper">
+                  <Image
+                    src={activeData.imageUrl}
+                    alt={activeData.name}
+                    width={320}
+                    height={160}
+                    className="map-info-card__image"
+                  />
+                </div>
+              )}
               <div className="map-info-card__type">
                 {activeData.type.replace("-", " ").toUpperCase()}
               </div>

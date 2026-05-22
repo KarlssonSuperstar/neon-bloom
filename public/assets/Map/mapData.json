@@ -7,7 +7,8 @@
             "y": 20,
             "type": "city",
             "faction": "bloom",
-            "description": "The neon heart of the Bloom network. A sprawling vertical metropolis of light, speed and constant surveillance."
+            "description": "The neon heart of the Bloom network. A sprawling vertical metropolis of light, speed and constant surveillance.",
+            "imageUrl": "/assets/Map/Places/LumenCity.png"
         },
         {
             "id": "crown-spire",
@@ -16,7 +17,8 @@
             "y": 10,
             "type": "city",
             "faction": "crown",
-            "description": "Seat of Crown Division command. A fortified high-rise district bristling with relay towers and enforcement nodes."
+            "description": "Seat of Crown Division command. A fortified high-rise district bristling with relay towers and enforcement nodes.",
+            "imageUrl": "/assets/Map/Places/CrownSpire.png"
         },
         {
             "id": "black-harbor",
@@ -34,7 +36,8 @@
             "y": 69.5,
             "type": "harbor",
             "faction": "bloom",
-            "description": "An aging port district. Smugglers, freelancers and abandoned relay barges line the waterfront."
+            "description": "An aging port district. Smugglers, freelancers and abandoned relay barges line the waterfront.",
+            "imageUrl": "/assets/Map/Places/Blackwake Harbor.png"
         },
         {
             "id": "tidal-relay",
@@ -43,7 +46,8 @@
             "y": 27,
             "type": "relay-station",
             "faction": "bloom",
-            "description": "Off-shore relay node boosting Bloom signals along the western coast."
+            "description": "Off-shore relay node boosting Bloom signals along the western coast.",
+            "imageUrl": "/assets/Map/Places/Tidal Relay Array.png"
         },
         {
             "id": "horizon-station",
@@ -52,7 +56,8 @@
             "y": 62.1,
             "type": "relay-station",
             "faction": "crown",
-            "description": "Central transit junction. Couriers from all factions pass through on contested ground."
+            "description": "Central transit junction. Couriers from all factions pass through on contested ground.",
+            "imageUrl": "/assets/Map/Places/Horizon Station.png"
         },
         {
             "id": "relay-woods",
@@ -115,7 +120,8 @@
             "y": 41,
             "type": "outpost",
             "faction": "contested",
-            "description": "A circular fortification at a major crossroads. Control shifts between factions constantly."
+            "description": "A circular fortification at a major crossroads. Control shifts between factions constantly.",
+            "imageUrl": "/assets/Map/Places/Split Gate.png"
         },
         {
             "id": "forest-gate",
@@ -142,7 +148,8 @@
             "y": 54,
             "type": "outpost",
             "faction": "contested",
-            "description": "Rogue relay station operated by pirate couriers on the eastern frontier."
+            "description": "Rogue relay station operated by pirate couriers on the eastern frontier.",
+            "imageUrl": "/assets/Map/Places/Pirate Relay.png"
         },
         {
             "id": "ironhold",
@@ -151,7 +158,8 @@
             "y": 78,
             "type": "industrial",
             "faction": "neutral",
-            "description": "Heavy manufacturing district. Rusted infrastructure, high security, low questions asked."
+            "description": "Heavy manufacturing district. Rusted infrastructure, high security, low questions asked.",
+            "imageUrl": "/assets/Map/Places/Ironhold Industrial Zone.png"
         },
         {
             "id": "bloom-shelter",
@@ -169,7 +177,8 @@
             "y": 19,
             "type": "checkpoint",
             "faction": "crown",
-            "description": "Crown Division security checkpoint. All traffic scanned and logged."
+            "description": "Crown Division security checkpoint. All traffic scanned and logged.",
+            "imageUrl": "/assets/Map/Places/CrownCity.png"
         },
         {
             "id": "old-canal",

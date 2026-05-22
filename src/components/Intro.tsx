@@ -51,8 +51,8 @@ export default function Intro() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/15" />
 
             <div className="relative z-10 flex justify-between items-start gap-exp-3">
-              <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-bloom">{c.tag}</span>
-              <span className="font-mono text-[10px] tracking-[0.18em] text-mute">F·{String(i + 1).padStart(2, "0")}</span>
+              <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-bloom bg-black/50 px-[7px] py-1 backdrop-blur-md border border-white/10 rounded-xs z-20">{c.tag}</span>
+              <span className="font-mono text-[9px] tracking-[0.2em] text-mute bg-black/50 px-[7px] py-1 backdrop-blur-md border border-white/10 rounded-xs z-20">F·{String(i + 1).padStart(2, "0")}</span>
             </div>
             <div className="relative z-10">
               <h3 className="font-display font-bold text-2xl md:text-3xl tracking-[-0.01em] mt-exp-3 leading-[1.05]">{c.title}</h3>

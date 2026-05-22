@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
         
         <div>
           <div className="flex items-center gap-exp-2 font-display font-black text-sm tracking-wider text-paper">
-            <div className="w-2.5 h-2.5 rounded-sm bg-bloom shadow-[0_0_16px_var(--color-bloom)]" />
+            <Image src="/assets/Loggo.png" alt="NEON BLOOM Logo" width={24} height={24} className="h-6 w-auto object-contain" />
             NEON BLOOM
           </div>
           <p className="max-w-[340px] mt-exp-3 text-[13px] leading-[1.6] text-paper-dim">

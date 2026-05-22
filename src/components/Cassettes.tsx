@@ -4,6 +4,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import Image from "next/image";
 
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
@@ -110,6 +111,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
 
   useEffect(() => {
     if (isExpanded || isHovered) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsActive(true);
     } else {
       const t = setTimeout(() => setIsActive(false), 600); // Wait for un-expand animation to finish
@@ -170,7 +172,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
 
   const rotateY = useTransform(
     [rotateYBase, flipAnimation],
-    ([base, flip]: any) => base + flip
+    ([base, flip]: number[]) => base + flip
   );
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
@@ -218,7 +220,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
   return (
     <div
       className={cn(
-        "relative flex flex-col items-center justify-center w-full transition-colors duration-300",
+        "relative flex flex-col items-center justify-center w-full transition-colors duration-300 cursor-pointer",
         isActive ? "z-50" : "z-10",
         "h-[340px] md:h-[660px]"
       )}
@@ -243,7 +245,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
       />
 
       {/* Title under cassette on mobile */}
-      <div className="absolute bottom-2 left-0 right-0 text-center md:hidden">
+      <div className="absolute -bottom-2 left-0 right-0 text-center md:hidden">
         <h4 className={cn(
           "font-display text-[12px] font-bold tracking-widest transition-opacity duration-300",
           isExpanded ? "opacity-0" : "opacity-100",
@@ -269,14 +271,14 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
             style={{ transform: `translateZ(${halfD}px)` }}
             className="absolute inset-0 [backface-visibility:hidden] bg-[#0d0f15]"
           >
-            <img src="/assets/cart-frontPNG.png" alt="Front" className="absolute inset-0 z-20 w-full h-full object-cover pointer-events-none" />
+            <Image src="/assets/cart-frontPNG.png" alt="Front" className="absolute inset-0 z-20 w-full h-full object-cover pointer-events-none" fill />
             <div className="absolute inset-0 z-10 flex flex-col items-center text-center pl-[84px] pr-[76px] pt-[140px] pb-[125px]">
 
               {/* LOGO SECTION */}
               <div className="w-full aspect-square max-w-[100px] mx-auto relative flex items-center justify-center mb-2">
                 <div className={cn("absolute inset-0", isCrown ? "bg-[repeating-linear-gradient(45deg,rgba(255,214,10,0)_0px,rgba(255,214,10,0)_6px,rgba(255,214,10,0.2)_6px,rgba(255,214,10,0.2)_12px)]" : isSky ? "bg-[repeating-linear-gradient(45deg,rgba(105,180,255,0)_0px,rgba(105,180,255,0)_6px,rgba(105,180,255,0.2)_6px,rgba(105,180,255,0.2)_12px)]" : isSplit ? "bg-[repeating-linear-gradient(45deg,rgba(255,107,61,0)_0px,rgba(255,107,61,0)_6px,rgba(255,107,61,0.2)_6px,rgba(255,107,61,0.2)_12px)]" : "bg-[repeating-linear-gradient(45deg,rgba(255,61,138,0)_0px,rgba(255,61,138,0)_6px,rgba(255,61,138,0.2)_6px,rgba(255,61,138,0.2)_12px)]")} />
                 {data.iconUrl ? (
-                  <img src={data.iconUrl} alt="Icon" className="w-[84px] h-[84px] relative z-10 object-contain" />
+                  <Image src={data.iconUrl} alt="Icon" width={84} height={84} className="w-[84px] h-[84px] relative z-10 object-contain" />
                 ) : (
                   <svg viewBox="0 0 24 24" fill="currentColor" className={cn("w-[84px] h-[84px] relative z-10", isCrown ? "text-crown" : isSky ? "text-sky" : isSplit ? "text-split" : "text-bloom")}>
                     {isCrown ? (
@@ -371,7 +373,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
             style={{ transform: `rotateY(180deg) translateZ(${halfD}px)` }}
             className="absolute inset-0 [backface-visibility:hidden] bg-[#0a0c12] group"
           >
-            <img src="/assets/cart-backPNG.png" alt="Back" className="absolute inset-0 z-20 w-full h-full object-cover pointer-events-none" />
+            <Image src="/assets/cart-backPNG.png" alt="Back" className="absolute inset-0 z-20 w-full h-full object-cover pointer-events-none" fill />
 
             {/* Click Me Indicator */}
             <motion.div
@@ -414,7 +416,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
                   <div className={cn("w-full aspect-square border p-1 mb-2 relative flex items-center justify-center", isCrown ? "border-crown/50" : isSky ? "border-sky/50" : isSplit ? "border-split/50" : "border-bloom/50")}>
                     <div className={cn("absolute inset-0 opacity-20", isCrown ? "bg-[repeating-linear-gradient(45deg,rgba(255,214,10,0)_0px,rgba(255,214,10,0)_4px,rgba(255,214,10,1)_4px,rgba(255,214,10,1)_8px)]" : isSky ? "bg-[repeating-linear-gradient(45deg,rgba(105,180,255,0)_0px,rgba(105,180,255,0)_4px,rgba(105,180,255,1)_4px,rgba(105,180,255,1)_8px)]" : isSplit ? "bg-[repeating-linear-gradient(45deg,rgba(255,107,61,0)_0px,rgba(255,107,61,0)_4px,rgba(255,107,61,1)_4px,rgba(255,107,61,1)_8px)]" : "bg-[repeating-linear-gradient(45deg,rgba(255,61,138,0)_0px,rgba(255,61,138,0)_4px,rgba(255,61,138,1)_4px,rgba(255,61,138,1)_8px)]")} />
                     {data.iconUrl ? (
-                      <img src={data.iconUrl} alt="Icon" className="w-[76px] h-[76px] relative z-10 object-contain" />
+                      <Image src={data.iconUrl} alt="Icon" width={76} height={76} className="w-[76px] h-[76px] relative z-10 object-contain" />
                     ) : (
                       <svg viewBox="0 0 24 24" fill="currentColor" className={cn("w-[76px] h-[76px] relative z-10", isCrown ? "text-crown" : isSky ? "text-sky" : isSplit ? "text-split" : "text-bloom")}>
                         {isCrown ? (
@@ -532,7 +534,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
             style={{ width: D, left: -halfD, transform: 'rotateY(-90deg)' }}
             className="absolute top-0 bottom-0 bg-[#0a0c12]"
           >
-            <img src="/assets/cart-leftPNG.png" alt="Left" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
+            <Image src="/assets/cart-leftPNG.png" alt="Left" className="absolute inset-0 w-full h-full object-cover pointer-events-none" fill />
           </div>
 
           {/* RIGHT FACE */}
@@ -540,7 +542,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
             style={{ width: D, right: -halfD, transform: 'rotateY(90deg)' }}
             className="absolute top-0 bottom-0 bg-[#0a0c12]"
           >
-            <img src="/assets/cart-rightPNG.png" alt="Right" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
+            <Image src="/assets/cart-rightPNG.png" alt="Right" className="absolute inset-0 w-full h-full object-cover pointer-events-none" fill />
           </div>
 
           {/* TOP FACE */}
@@ -563,7 +565,7 @@ function Cassette({ data }: { data: typeof CASSETTE_DATA[0] }) {
 
 export default function Cassettes() {
   return (
-    <section id="cargo" className="w-full max-w-[1480px] mx-auto px-exp-3 md:px-exp-4 pb-exp-6 mb-[120px]">
+    <section id="cargo" className="w-full max-w-[1480px] mx-auto px-exp-3 md:px-exp-4 pb-exp-5 mb-[60px]">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-y-3 gap-x-exp-4 py-exp-5 pb-exp-4 border-b border-line">
         <div>
           <div className="font-mono text-[11px] tracking-[0.22em] uppercase text-mute">§ 02 · COURIER PAYLOAD ARCHIVE</div>
@@ -585,7 +587,7 @@ export default function Cassettes() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-6 md:gap-exp-4 py-exp-4">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-10 md:gap-exp-4 py-exp-4">
         {CASSETTE_DATA.map((d, i) => (
           <motion.div
             key={d.id}

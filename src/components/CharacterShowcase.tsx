@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import clsx from "clsx";
 
+const MotionImage = motion.create(Image);
+
 type Character = {
   id: string;
   name: string;
@@ -14,6 +16,10 @@ type Character = {
   heroImage: string;
   description: string;
   quote: string;
+  age: string;
+  height: string;
+  weight: string;
+  role: string;
   desktopPosition: {
     left: string;
     bottom: string;
@@ -40,105 +46,137 @@ const CHARACTERS: Character[] = [
   // ── NEON BLOOM (left cluster, ~0%–28%) ──────────────────────────────
   {
     id: "neon-1",
-    name: "Mira",
+    name: "Mira Vale",
     faction: "Neon Bloom",
     factionColor: "#ff2f91", // Pink
     lineupImage: "/assets/characters/BloomMira.png",
     heroImage: "/assets/characters/Profile/BloomProfileMira.png",
-    description: "A seasoned veteran of the underground circuits, striking from the shadows.",
+    description: "A calm and strategic route broker who manages safehouses, contacts and hidden paths across the city. Mira knows which routes are open, which ones are watched and who can be trusted. She is the person couriers go to when a delivery becomes too dangerous to plan alone.",
     quote: "They won't know what hit them until it's too late.",
+    age: "32",
+    height: "172 cm",
+    weight: "65 kg",
+    role: "Handler / Route Broker",
     // Back-left of the group, medium height
     desktopPosition: { left: "-4%", bottom: "0%", height: "90%", scale: 0.7, zIndex: 12 }
   },
   {
     id: "neon-2",
-    name: "Juno",
+    name: "Juno Sparks",
     faction: "Neon Bloom",
     factionColor: "#ff2f91",
     lineupImage: "/assets/characters/BloomJuno.png",
     heroImage: "/assets/characters/Profile/BloomProfileJuno.png",
-    description: "Tech-savvy hacker with a penchant for explosive diversions.",
+    description: "A chaotic but brilliant mechanic who repairs drones, vehicles and courier gear for the Bloom network. Juno grew up around broken machines and black-market parts, turning her garage into a noisy safehouse where almost anything can be fixed, upgraded or rebuilt.",
     quote: "Watch the fireworks. I coded them myself.",
+    age: "24",
+    height: "164 cm",
+    weight: "62 kg",
+    role: "Mechanic / Vehicle Specialist",
     // Behind Mira, elevated — her head/arm pokes above the group
     desktopPosition: { left: "8%", bottom: "6%", height: "100%", scale: 0.7, zIndex: 6 }
   },
   {
     id: "neon-3",
-    name: "Rafe",
+    name: "Rafe Calder",
     faction: "Neon Bloom",
     factionColor: "#ff2f91",
     lineupImage: "/assets/characters/BloomRafe.png",
     heroImage: "/assets/characters/Profile/BloomProfileRafe.png",
-    description: "The muscle. Hard-hitting and relentless in hand-to-hand combat.",
+    description: "A reckless Bloom ally with a talent for turning bad situations into survivable ones. Rafe is loud, impulsive and often impossible to control, but his loyalty runs deep. He handles dangerous routes, forced entries and missions where subtlety has already failed.",
     quote: "I'll break the front door down.",
+    age: "34",
+    height: "188 cm",
+    weight: "94 kg",
+    role: "Route Runner / Heavy Support",
     // Center of the left group, overlapping Juno
     desktopPosition: { left: "0%", bottom: "0%", height: "68%", scale: 0.7, zIndex: 22 }
   },
   {
     id: "neon-4",
-    name: "Curior",
+    name: "The Courier ( You )",
     faction: "Neon Bloom",
     factionColor: "#ff2f91",
     lineupImage: "/assets/characters/BloomCurior.png",
     heroImage: "/assets/characters/Profile/BloomProfileCurrior.png",
-    description: "A skilled courier pulled into a larger conflict after carrying a high-value cargo cassette.",
+    description: "A fast and highly skilled courier who moves sealed cargo through restricted routes, rooftops and hidden city paths. Guarded, precise and difficult to track, The Courier becomes the center of a larger conflict when a routine delivery turns into a fight for control of the city network.",
     quote: "Every delivery has a cost. I just stopped pretending it was only money.",
+    age: "27",
+    height: "178 cm",
+    weight: "72 kg",
+    role: "Freelance Courier / Route Runner",
     // Front-right of Bloom group, shorter, closest to camera
     desktopPosition: { left: "16%", bottom: "0%", height: "55%", scale: 0.7, zIndex: 28 }
   },
   // ── CROWN DIVISION (right cluster, ~50%–78%) ────────────────────────
   {
     id: "crown-1",
-    name: "Maximus",
+    name: "Maximus Vane",
     faction: "Crown Division",
     factionColor: "#facc15", // Yellow
     lineupImage: "/assets/characters/CrownMaximus.png",
     heroImage: "/assets/characters/Profile/CrownProfileMaximus.png",
-    description: "Cold and calculated executioner for the division.",
+    description: "The ideological leader of The Crown Division. Vane believes that freedom creates disorder and that every route, signal and movement should be controlled. Calm, severe and highly disciplined, he is the face of the system Bloom is fighting against.",
     quote: "Order is absolute. Chaos will be purged.",
+    age: "51",
+    height: "190 cm",
+    weight: "88 kg",
+    role: "Commander / Crown Division Leader",
     // Front-left of Crown group
     desktopPosition: { left: "60%", bottom: "0%", height: "55%", scale: 0.7, zIndex: 28 }
   },
   {
     id: "crown-2",
-    name: "Vera",
+    name: "Vera Kestrel",
     faction: "Crown Division",
     factionColor: "#facc15",
     lineupImage: "/assets/characters/CrownVera.png",
     heroImage: "/assets/characters/Profile/CrownProfileVera.png",
-    description: "Tactical overseer with unmatched precision.",
+    description: "A precise long-range assassin trained by The Crown Division to control open routes from a distance. Vera is calm, elegant and terrifyingly patient. Her presence turns rooftops, streets and exposed paths into places where the player never feels completely safe.",
     quote: "I see every move before you even make it.",
+    age: "36",
+    height: "176 cm",
+    weight: "61 kg",
+    role: "Elite Sniper",
     // Right-center, in front of Goliath
     desktopPosition: { left: "65%", bottom: "0%", height: "72%", scale: 0.7, zIndex: 18, selectedX: "-33%" }
   },
   {
     id: "crown-3",
-    name: "Kairo",
+    name: "Kairo Sable",
     faction: "Crown Division",
     factionColor: "#facc15",
     lineupImage: "/assets/characters/CrownKairo.png",
     heroImage: "/assets/characters/Profile/CrownProfileKairo.png",
-    description: "Cybernetically enhanced swordsman.",
+    description: "A cybernetically enhanced execution unit sent into places The Crown cannot reach openly. Kairo specializes in infiltration, silent capture and close-range combat. He represents the terrifying idea that even hidden Bloom routes can be found.",
     quote: "My blade is faster than your code.",
+    age: "29",
+    height: "182 cm",
+    weight: "78 kg",
+    role: "Cybernetic Stealth Unit",
     // Behind Maximus, elevated — sword/head visible above
     desktopPosition: { left: "55%", bottom: "2%", height: "82%", scale: 0.7, zIndex: 6 }
   },
   {
     id: "crown-4",
-    name: "Bastion",
+    name: "Bastion Kroll",
     faction: "Crown Division",
     factionColor: "#facc15",
     lineupImage: "/assets/characters/CrownBastion.png",
     heroImage: "/assets/characters/Profile/CrownProfileBastion.png",
-    description: "Heavy assault unit designated B-12.",
+    description: "A massive genetically modified enforcer used when The Crown Division wants something destroyed rather than investigated. Bastion is built for breaching safehouses, breaking barricades and forcing his way through resistance zones. He is less a soldier than a walking threat.",
     quote: "TARGET ACQUIRED. INITIATING PACIFICATION.",
+    age: "42",
+    height: "230 cm",
+    weight: "210 kg",
+    role: "Siege Enforcer",
     // Tallest character, anchors the right side of the composition
     desktopPosition: { left: "72%", bottom: "0%", height: "120%", scale: 0.7, zIndex: 10 }
   }
 ];
 
 // Custom display order for the Bloom faction panel (top → bottom)
-const BLOOM_DISPLAY_ORDER = ["Curior", "Rafe", "Mira", "Juno"];
+const BLOOM_DISPLAY_ORDER = ["The Courier ( You )", "Rafe Calder", "Mira Vale", "Juno Sparks"];
 
 // Custom portrait alignment helper for mobile circles to perfectly center characters' faces
 const getMobilePortraitStyle = (name: string): CSSProperties => {
@@ -148,23 +186,23 @@ const getMobilePortraitStyle = (name: string): CSSProperties => {
   };
 
   switch (name) {
-    case "Maximus":
+    case "Maximus Vane":
       return {
         transform: "scale(3.4)",
         transformOrigin: "top center",
       };
-    case "Curior":
+    case "The Courier ( You )":
       return {
         transform: "scale(2.7) translateX(-18%)",
         transformOrigin: "top center",
       };
-    case "Mira":
+    case "Mira Vale":
       return {
         transform: "scale(2.7) translateX(12%)",
         transformOrigin: "top center",
       };
-    case "Kairo":
-    case "Bastion":
+    case "Kairo Sable":
+    case "Bastion Kroll":
       return {
         transform: "scale(2.7) translateX(10%)",
         transformOrigin: "top center",
@@ -220,6 +258,18 @@ export default function CharacterShowcase() {
             "w-full h-full",
             isDesktop ? "relative" : "flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8"
           )}>
+
+            {isDesktop && (
+              <MotionImage
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 0.1, scale: 1 }}
+                transition={{ duration: 1, delay: 0.2 }}
+                src="/assets/characters/bloomCrown.png"
+                alt="Bloom vs Crown"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[40%] w-auto object-contain z-0 pointer-events-none"
+                width={800} height={800}
+              />
+            )}
 
             <AnimatePresence>
               {CHARACTERS.map((char, i) => {
@@ -328,11 +378,16 @@ export default function CharacterShowcase() {
                       <AnimatePresence>
                         {isHovered && !isSelected && isDesktop && (
                           <motion.div
-                            initial={{ opacity: 0, y: 12, scale: 0.8 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 6, scale: 0.85 }}
+                            initial={ char.name === "Bastion Kroll" ? { opacity: 0, x: 12, scale: 0.8 } : { opacity: 0, y: 12, scale: 0.8 } }
+                            animate={ char.name === "Bastion Kroll" ? { opacity: 1, x: 0, scale: 1 } : { opacity: 1, y: 0, scale: 1 } }
+                            exit={ char.name === "Bastion Kroll" ? { opacity: 0, x: 6, scale: 0.85 } : { opacity: 0, y: 6, scale: 0.85 } }
                             transition={{ duration: 0.18, ease: "easeOut" }}
-                            className="absolute -top-[68px] left-1/2 -translate-x-1/2 z-40 pointer-events-none flex flex-col items-center"
+                            className={clsx(
+                              "absolute z-40 pointer-events-none flex items-center",
+                              char.name === "Bastion Kroll"
+                                ? "flex-row left-[5%] lg:left-[10%] top-[18%] -translate-x-full" 
+                                : "flex-col -top-[68px] left-1/2 -translate-x-1/2"
+                            )}
                           >
                             <div className={clsx(
                               "px-7 py-3 text-base md:text-lg font-mono font-bold uppercase tracking-[0.3em] rounded-sm border shadow-2xl backdrop-blur-md whitespace-nowrap",
@@ -343,7 +398,10 @@ export default function CharacterShowcase() {
                               {char.name}
                             </div>
                             <div className={clsx(
-                              "w-3.5 h-3.5 border-r border-b rotate-45 -mt-[8px] bg-black/95",
+                              "w-3.5 h-3.5 rotate-45 bg-black/95",
+                              char.name === "Bastion Kroll"
+                                ? "border-t border-r -ml-[8px]"
+                                : "border-r border-b -mt-[8px]",
                               char.faction === "Neon Bloom" ? "border-[#ff2f91]/80" : "border-[#facc15]/80"
                             )} />
                           </motion.div>
@@ -351,10 +409,11 @@ export default function CharacterShowcase() {
                       </AnimatePresence>
 
                       {/* LINEUP IMAGE */}
-                      <motion.img
+                      <MotionImage
                         src={char.lineupImage}
                         alt={`${char.name} lineup`}
                         className="h-full w-auto max-w-none"
+                        width={800} height={1200}
                         initial={false}
                         animate={{
                           opacity: isSelected ? 0 : 1,
@@ -367,10 +426,11 @@ export default function CharacterShowcase() {
                         }}
                       />
                       {/* PROFILE (HERO) IMAGE - Overlays during selection */}
-                      <motion.img
+                      <MotionImage
                         src={char.heroImage}
                         alt={`${char.name} profile`}
                         className="absolute inset-0 h-full w-auto max-w-none"
+                        width={800} height={1200}
                         initial={false}
                         animate={{
                           opacity: isSelected ? 1 : 0,
@@ -410,10 +470,35 @@ export default function CharacterShowcase() {
                   >
                     {selectedCharacter.faction}
                   </div>
-                  <p className="text-white/80 leading-relaxed mb-6">
+
+                  {/* Designation */}
+                  <div className="mb-4 font-mono text-[11px]">
+                    <span className="text-white/30 uppercase tracking-widest block text-[9px] mb-0.5">Role / Designation</span>
+                    <span className="text-white font-semibold tracking-wider uppercase text-xs" style={{ color: selectedCharacter.factionColor }}>
+                      {selectedCharacter.role}
+                    </span>
+                  </div>
+
+                  {/* Physical Specs HUD */}
+                  <div className="grid grid-cols-3 gap-2 mb-5 border-y border-white/10 py-3 font-mono text-[11px]">
+                    <div>
+                      <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Age</span>
+                      <span className="text-white font-bold text-xs">{selectedCharacter.age}</span>
+                    </div>
+                    <div className="border-l border-white/10 pl-3">
+                      <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Height</span>
+                      <span className="text-white font-bold text-xs">{selectedCharacter.height}</span>
+                    </div>
+                    <div className="border-l border-white/10 pl-3">
+                      <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Weight</span>
+                      <span className="text-white font-bold text-xs">{selectedCharacter.weight}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-white/80 leading-relaxed mb-6 text-sm">
                     {selectedCharacter.description}
                   </p>
-                  <div className="pl-4 border-l-2 border-white/20 italic text-white/60">
+                  <div className="pl-4 border-l-2 border-white/20 italic text-white/60 text-sm">
                     &quot;{selectedCharacter.quote}&quot;
                   </div>
                 </motion.div>
@@ -498,7 +583,7 @@ export default function CharacterShowcase() {
                       </span>
                       {/* Mobile Portrait */}
                       <div className="md:hidden w-14 h-14 rounded-full overflow-hidden border border-white/20 shrink-0">
-                        <img src={char.heroImage} alt={char.name} className="w-full h-full object-cover object-top" style={getMobilePortraitStyle(char.name)} />
+                        <Image src={char.heroImage} alt={char.name} width={500} height={500} className="w-full h-full object-cover object-top" style={getMobilePortraitStyle(char.name)} />
                       </div>
                       {/* Name */}
                       <span className={clsx(
@@ -525,10 +610,30 @@ export default function CharacterShowcase() {
                         >
                           <div className="p-4 border-x border-b border-[#ff2f91]/20 bg-[#0a0c12]/90 flex flex-col gap-3 rounded-b-sm">
                             <div className="w-full h-[180px] relative rounded-sm overflow-hidden border border-white/10">
-                              <img src={char.heroImage} alt={char.name} className="absolute inset-0 w-full h-full object-cover object-top" />
+                              <Image src={char.heroImage} alt={char.name} className="absolute inset-0 w-full h-full object-cover object-top" fill />
                             </div>
                             <div className="text-xs font-semibold tracking-widest uppercase text-[#ff2f91]">
                               {char.faction}
+                            </div>
+                            {/* Designation */}
+                            <div className="font-mono text-[10px] border-t border-b border-[#ff2f91]/15 py-2">
+                              <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Role / Designation</span>
+                              <span className="text-[#ff2f91] font-semibold tracking-wider uppercase text-[11px]">{char.role}</span>
+                            </div>
+                            {/* Physical Specs HUD */}
+                            <div className="grid grid-cols-3 gap-2 border-b border-[#ff2f91]/15 pb-2.5 font-mono text-[10px]">
+                              <div>
+                                <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Age</span>
+                                <span className="text-white font-bold">{char.age}</span>
+                              </div>
+                              <div className="border-l border-[#ff2f91]/15 pl-2">
+                                <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Height</span>
+                                <span className="text-white font-bold">{char.height}</span>
+                              </div>
+                              <div className="border-l border-[#ff2f91]/15 pl-2">
+                                <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Weight</span>
+                                <span className="text-white font-bold">{char.weight}</span>
+                              </div>
                             </div>
                             <p className="text-white/80 text-sm leading-relaxed">
                               {char.description}
@@ -631,7 +736,7 @@ export default function CharacterShowcase() {
                       </span>
                       {/* Mobile Portrait */}
                       <div className="md:hidden w-14 h-14 rounded-full overflow-hidden border border-white/20 shrink-0">
-                        <img src={char.heroImage} alt={char.name} className="w-full h-full object-cover object-top" style={getMobilePortraitStyle(char.name)} />
+                        <Image src={char.heroImage} alt={char.name} width={500} height={500} className="w-full h-full object-cover object-top" style={getMobilePortraitStyle(char.name)} />
                       </div>
                       {/* Name */}
                       <span className={clsx(
@@ -658,10 +763,30 @@ export default function CharacterShowcase() {
                         >
                           <div className="p-4 border-x border-b border-[#facc15]/20 bg-[#0a0c12]/90 flex flex-col gap-3 rounded-b-sm">
                             <div className="w-full h-[180px] relative rounded-sm overflow-hidden border border-white/10">
-                              <img src={char.heroImage} alt={char.name} className="absolute inset-0 w-full h-full object-cover object-top" />
+                              <Image src={char.heroImage} alt={char.name} className="absolute inset-0 w-full h-full object-cover object-top" fill />
                             </div>
                             <div className="text-xs font-semibold tracking-widest uppercase text-[#facc15]">
                               {char.faction}
+                            </div>
+                            {/* Designation */}
+                            <div className="font-mono text-[10px] border-t border-b border-[#facc15]/15 py-2">
+                              <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Role / Designation</span>
+                              <span className="text-[#facc15] font-semibold tracking-wider uppercase text-[11px]">{char.role}</span>
+                            </div>
+                            {/* Physical Specs HUD */}
+                            <div className="grid grid-cols-3 gap-2 border-b border-[#facc15]/15 pb-2.5 font-mono text-[10px]">
+                              <div>
+                                <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Age</span>
+                                <span className="text-white font-bold">{char.age}</span>
+                              </div>
+                              <div className="border-l border-[#facc15]/15 pl-2">
+                                <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Height</span>
+                                <span className="text-white font-bold">{char.height}</span>
+                              </div>
+                              <div className="border-l border-[#facc15]/15 pl-2">
+                                <span className="text-white/30 uppercase tracking-widest block text-[8px] mb-0.5">Weight</span>
+                                <span className="text-white font-bold">{char.weight}</span>
+                              </div>
                             </div>
                             <p className="text-white/80 text-sm leading-relaxed">
                               {char.description}

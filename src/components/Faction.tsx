@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 export default function Faction() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -45,26 +46,26 @@ export default function Faction() {
           {/* Bloom Background */}
           <motion.div 
             style={{ x: leftX }}
-            className="w-full lg:w-1/2 h-1/2 lg:h-full flex justify-center lg:justify-start origin-left min-h-[300.5px] lg:min-h-0 bg-transparent will-change-transform"
+            className="relative w-full lg:w-1/2 h-1/2 lg:h-full flex justify-center lg:justify-end origin-left min-h-[300.5px] lg:min-h-0 bg-transparent will-change-transform"
           >
-            <div className="hidden min-[550px]:block flex-1 h-full bg-[#eb367b]" />
-            <img src="/assets/runPNG.png" alt="Bloom Faction" className="h-full w-auto max-w-none object-contain -ml-[2px] shrink-0 min-h-[300.5px] lg:min-h-0" />
+            <div className="hidden min-[550px]:block flex-1 min-w-0 h-full bg-[#eb367b]" />
+            <Image src="/assets/runPNG.png" alt="Bloom Faction" width={800} height={800} className="relative h-full w-auto max-w-none object-contain -ml-[2px] shrink-0 min-h-[300.5px] lg:min-h-0 z-10" />
           </motion.div>
           {/* Crown Background */}
           <motion.div 
             style={{ x: rightX }}
-            className="w-full lg:w-1/2 h-1/2 lg:h-full flex justify-center lg:justify-start origin-right min-h-[300.5px] lg:min-h-0 bg-transparent will-change-transform"
+            className="relative w-full lg:w-1/2 h-1/2 lg:h-full flex justify-center lg:justify-start origin-right min-h-[300.5px] lg:min-h-0 bg-transparent will-change-transform"
           >
-            <img src="/assets/run2PNG.png" alt="Crown Faction" className="h-full w-auto max-w-none object-contain shrink-0 min-h-[300.5px] lg:min-h-0" />
-            <div className="hidden min-[550px]:block flex-1 h-full bg-[#fbb504] -ml-[2px]" />
+            <Image src="/assets/run2PNG.png" alt="Crown Faction" width={800} height={800} className="relative h-full w-auto max-w-none object-contain shrink-0 min-h-[300.5px] lg:min-h-0 z-10" />
+            <div className="hidden min-[550px]:block flex-1 min-w-0 h-full bg-[#fbb504] -ml-[2px]" />
           </motion.div>
         </div>
 
         {/* Overlay Content (Constrained Grid) */}
-        <div className="relative z-10 w-full max-w-[1480px] mx-auto grid grid-cols-1 lg:grid-cols-2 min-h-[520px] pointer-events-none">
+        <div className="relative z-10 w-full max-w-[1480px] mx-auto grid grid-cols-1 auto-rows-fr lg:grid-cols-2 lg:auto-rows-auto min-h-[520px] pointer-events-none">
           
           {/* Bloom Faction Text */}
-          <div className="relative p-exp-4 flex flex-col justify-end gap-exp-4 pointer-events-auto border-x border-y lg:border-r-0 border-white/10 min-h-[300.5px] lg:min-h-0">
+          <div className="relative h-full p-exp-4 flex flex-col justify-end gap-exp-4 pointer-events-auto border-x border-y lg:border-r-0 border-white/10 min-h-[300.5px] lg:min-h-0">
             <div className="absolute left-exp-4 top-exp-4 font-mono text-[10px] tracking-[0.2em] uppercase text-ink-1 font-bold border border-line-2 px-exp-2 py-exp-2 bg-bloom shadow-lg shadow-bloom/20">
               FRIENDLY · NETWORK
             </div>
@@ -88,12 +89,12 @@ export default function Faction() {
           </div>
 
           {/* Crown Faction Text */}
-          <div className="relative p-exp-4 flex flex-col justify-end gap-exp-4 pointer-events-auto border-x border-y lg:border-l border-white/10 lg:border-l-white/20 min-h-[300.5px] lg:min-h-0">
+          <div className="relative h-full p-exp-4 flex flex-col justify-end gap-exp-4 pointer-events-auto border-x border-y lg:border-l border-white/10 lg:border-l-white/20 min-h-[300.5px] lg:min-h-0">
             <div className="absolute right-exp-4 top-exp-4 font-mono text-[10px] tracking-[0.2em] uppercase text-ink-1 bg-crown border-crown font-bold px-exp-2 py-exp-2 shadow-sm">
               HOSTILE · ARMED
             </div>
 
-            <div>
+            <div className="mt-auto">
               <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-crown [text-shadow:_0_2px_8px_rgba(0,0,0,0.6)]">
                 — AUTHORITARIAN CONTROL
               </span>

@@ -36,6 +36,7 @@ export interface MapMarkerData {
   type: MarkerType;
   faction: Faction;
   description: string;
+  imageUrl?: string;
 }
 
 export interface MapLabelData {

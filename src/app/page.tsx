@@ -2,15 +2,17 @@ import Loader from "@/components/Loader";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Intro from "@/components/Intro";
-import Cassettes from "@/components/Cassettes";
-import World from "@/components/World";
-import Gameplay from "@/components/Gameplay";
-import Story from "@/components/Story";
-import Faction from "@/components/Faction";
-import CharacterShowcase from "@/components/CharacterShowcase";
-import Gallery from "@/components/Gallery";
-import Finale from "@/components/Finale";
-import Footer from "@/components/Footer";
+import dynamic from 'next/dynamic';
+
+const Cassettes = dynamic(() => import("@/components/Cassettes"));
+const World = dynamic(() => import("@/components/World"));
+const Gameplay = dynamic(() => import("@/components/Gameplay"));
+const Story = dynamic(() => import("@/components/Story"));
+const Faction = dynamic(() => import("@/components/Faction"));
+const CharacterShowcase = dynamic(() => import("@/components/CharacterShowcase"));
+const Gallery = dynamic(() => import("@/components/Gallery"));
+const Finale = dynamic(() => import("@/components/Finale"));
+const Footer = dynamic(() => import("@/components/Footer"));
 
 export default function Home() {
   return (

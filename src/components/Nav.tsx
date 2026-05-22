@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Nav() {
   const { scrollY } = useScroll();
@@ -32,7 +33,7 @@ export default function Nav() {
     >
       <div className="w-full max-w-[1480px] mx-auto flex items-center justify-between px-exp-3 md:px-exp-4 py-exp-3">
         <div className="flex items-center gap-exp-2 font-display font-black text-sm tracking-wider text-paper">
-          <img src="/assets/Loggo.png" alt="NEON BLOOM Logo" className="h-7 w-auto object-contain" />
+          <Image src="/assets/Loggo.png" alt="NEON BLOOM Logo" width={28} height={28} className="h-7 w-auto object-contain" />
           NEON BLOOM
         </div>
 
